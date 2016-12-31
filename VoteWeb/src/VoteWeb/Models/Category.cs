@@ -20,6 +20,10 @@ namespace VoteWeb.Models
         /// </summary>
         public int PRI { get; set; }
         /// <summary>
+        /// 创建者ID
+        /// </summary>
+        public long UserID { get; set; }
+        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }

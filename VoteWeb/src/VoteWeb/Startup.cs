@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using VoteWeb.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace VoteWeb
 {
@@ -33,14 +37,33 @@ namespace VoteWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //IConfiguration Configuration;
+            //services.AddConfiguration(out Configuration);
+            services.AddDbContext<VoteWebDBContext>(x => x.UseSqlite("Data source=voteweb.db"));
+
+            services.AddIdentity<User, IdentityRole<long>>(x =>
+            {
+                x.Password.RequireDigit = false;
+                x.Password.RequiredLength = 0;
+                x.Password.RequireLowercase = false;
+                x.Password.RequireNonAlphanumeric = false;
+                x.Password.RequireUppercase = false;
+                x.User.AllowedUserNameCharacters = null;
+            })
+            .AddEntityFrameworkStores<VoteWebDBContext, long>()
+            .AddDefaultTokenProviders();
+
+            services.AddMvc();
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+
 
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -60,6 +83,7 @@ namespace VoteWeb
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {
@@ -67,6 +91,7 @@ namespace VoteWeb
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            await SampleData.InitDB(app.ApplicationServices);
         }
     }
 }
