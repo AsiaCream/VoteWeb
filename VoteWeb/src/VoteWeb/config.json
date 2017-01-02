@@ -1,3 +1,10 @@
-﻿{
-  "WebName": "投票网站"
+﻿/*配置文件*/
+{
+  "WebName": "投票网站",
+  "AdminWebName": "管理后台",
+  "CopyRight": "Design by AsiaCream.",
+  "DesignerURL": "http:asiacream.cn:8888",
+  "DesignerTitle": "个人博客",
+  "Technical support": "个人博客",
+  "AdminLayout": "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml"
 }

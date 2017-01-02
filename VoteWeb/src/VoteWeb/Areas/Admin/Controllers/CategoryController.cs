@@ -16,6 +16,7 @@ namespace VoteWeb.Areas.Admin.Controllers
         {
             DB = _DBContext;
         }
+
         #region Add
         /// <summary>
         /// 渲染添加视图
@@ -39,6 +40,7 @@ namespace VoteWeb.Areas.Admin.Controllers
             return Json(_JResult);
         }
         #endregion
+
         #region Delete
         /// <summary>
         /// 通过CategoryID删除分类
@@ -64,6 +66,7 @@ namespace VoteWeb.Areas.Admin.Controllers
             return Json(_JResult);
         }
         #endregion
+
         #region Update
         /// <summary>
         /// 渲染更新分类视图
@@ -94,6 +97,12 @@ namespace VoteWeb.Areas.Admin.Controllers
             {
                 entity.Title = category.Title;
                 entity.PRI = category.PRI;
+                entity.CategoryID = category.CategoryID;
+                entity.CreateTime = category.CreateTime;
+                entity.StartTime = category.StartTime;
+                entity.EndTime = category.EndTime;
+                entity.IsDelete = category.IsDelete;
+                entity.IsEnd = category.IsEnd;
                 ReturnResult(DB.SaveChanges());
             }
             else
@@ -104,6 +113,7 @@ namespace VoteWeb.Areas.Admin.Controllers
             return Json(_JResult);
         }
         #endregion
+
         #region Delete
         /// <summary>
         /// 删除分类
