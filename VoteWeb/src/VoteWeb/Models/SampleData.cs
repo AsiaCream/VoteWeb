@@ -20,10 +20,13 @@ namespace VoteWeb.Models
 
             if (DB.Database != null && DB.Database.EnsureCreated())
             {
+                #region 初始化角色信息
                 await roleManager.CreateAsync(new IdentityRole<long> { Name = "超级管理员" });
                 await roleManager.CreateAsync(new IdentityRole<long> { Name = "管理员" });
-                await roleManager.CreateAsync(new IdentityRole<long> { Name = "普通用户" });
+                await roleManager.CreateAsync(new IdentityRole<long> { Name = "普通用户" }); 
+                #endregion
 
+                #region 初始化管理员和用户
                 var SuperAdmin = new User
                 {
                     UserName = "SAdmin",
@@ -47,6 +50,27 @@ namespace VoteWeb.Models
                 };
                 await userManager.CreateAsync(Guest, "123456");
                 await userManager.AddToRoleAsync(Guest, "普通用户");
+                DB.SaveChanges();
+                #endregion
+
+                #region 初始化20条分类
+                for (var i = 0; i < 60; i++)
+                {
+                    var category = new Category
+                    {
+                        Title = i > 30 ? (i % 2 == 0 ? "山水画" + i : "人物画" + i) : (i % 2 == 0 ? "风景画" + i : "素描" + i),
+                        PRI = i % 10,
+                        UserID = SuperAdmin.UserID,
+                        CreateTime = DateTime.Now,
+                        StartTime = DateTime.Now,
+                        EndTime = DateTime.Now,
+                        IsDelete = i % 6 == 0 ? 1 : 0,
+                        IsEnd = i % 5 == 0 ? 1 : 0
+                    };
+                    DB.Categorys.Add(category);
+                }
+                
+                #endregion
             }
             DB.SaveChanges();
         }

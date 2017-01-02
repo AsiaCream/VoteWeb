@@ -114,9 +114,28 @@ namespace VoteWeb.Areas.Admin.Controllers
         }
         #endregion
 
-        #region Delete
+        #region Select
+
         /// <summary>
-        /// 删除分类
+        /// 查询所有分类列表
+        /// </summary>
+        /// <returns></returns>
+        [Area("Admin")]
+        [HttpGet]
+        public IActionResult List(int IsDelete=0,int IsEnd=0)
+        {
+            List<Category> list = DB.Categorys.OrderBy(x => x.IsEnd)
+                .Where(x=>x.IsDelete==IsDelete&&x.IsEnd==IsEnd)
+                .OrderBy(x => x.IsDelete)
+                .OrderByDescending(x => x.CreateTime)
+                .ThenByDescending(x => x.StartTime)
+                .ThenByDescending(x => x.EndTime)
+                .ToList();
+            return View(list);
+        }
+
+        /// <summary>
+        /// 获取详情
         /// </summary>
         /// <param name="CategoryID"></param>
         /// <returns></returns>
@@ -133,7 +152,8 @@ namespace VoteWeb.Areas.Admin.Controllers
                 return Json(_JResult);
             }
             return View(entity);
-        } 
+        }
+
         #endregion
 
         private JResult ReturnResult(int result)

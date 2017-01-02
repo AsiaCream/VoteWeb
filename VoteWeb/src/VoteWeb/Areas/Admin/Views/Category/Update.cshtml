@@ -1,0 +1,63 @@
+﻿@model Category
+@{
+    ViewBag.Title = "更新分类";
+    ViewBag.FirstTab = "分类管理";
+    ViewBag.SecondTab = "分类列表";
+    ViewBag.ThirdTab = "更新分类";
+    Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+    <form asp-action="Update" asp-controller="Category" asp-route-CategoryID="@Model.CategoryID" role="form">
+        <fieldset>
+            <legend></legend>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">分类ID</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" value="@Model.CategoryID" disabled="disabled"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">分类名</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" value="@Model.Title" name="Title" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">优先级</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" value="@Model.PRI" name="PRI" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">创建者</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" value="@Model.UserID" disabled="disabled"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">创建时间</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" value="@Model.CreateTime" name="CreateTime" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">开始时间</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" value="@Model.StartTime" name="StartTime" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">结束时间</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" value="@Model.EndTime" name="EndTime" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label"></label>
+                <div class="col-md=10">
+                    <input type="submit" class="form-control btn btn-success" value="更新" />
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

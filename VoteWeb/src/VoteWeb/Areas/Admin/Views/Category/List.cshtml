@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Category>
+@{
+    ViewBag.Title = "所有分类列表";
+    ViewBag.FirstTab = "分类管理";
+    ViewBag.SecondTab = "分类列表";
+    ViewBag.ThirdTab = "所有分类列表";
+    Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>类型名</th>
+                <th>优先级</th>
+                <th>创建时间</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>创建者</th>
+                <th>操作<span class="badge badge-info pull-right">总数量:@Model.Count()</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Category item in Model)
+            {
+                <tr>
+                    <td>@item.CategoryID</td>
+                    <td>@item.Title</td>
+                    <td>@item.PRI</td>
+                    <td>@item.CreateTime</td>
+                    <td>@item.StartTime</td>
+                    <td>@item.EndTime</td>
+                    <td>@item.UserID</td>
+                    <td>
+                        <a asp-action="Update" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-warning">编辑</a>|
+                        <a asp-action="Detail" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-success">查看</a>|
+                        <a href="javascript:;" class="btn btn-danger">删除</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
