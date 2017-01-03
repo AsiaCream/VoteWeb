@@ -20,8 +20,16 @@ namespace VoteWeb.Models
         /// </summary>
         public string Email { get; set; }
         /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateTime { get; set; }
+        /// <summary>
         /// 作者简介
         /// </summary>
         public string Introduction { get; set; }
+        /// <summary>
+        /// 是否删除
+        /// </summary>
+        public int IsDelete { get; set; }
     }
 }

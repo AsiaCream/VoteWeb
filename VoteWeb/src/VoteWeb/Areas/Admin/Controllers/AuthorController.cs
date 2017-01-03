@@ -21,6 +21,7 @@ namespace VoteWeb.Areas.Admin.Controllers
         /// 渲染添加视图
         /// </summary>
         /// <returns></returns>
+        [Area("Admin")]
         [HttpGet]
         public IActionResult Add() => View();
         /// <summary>
@@ -28,10 +29,13 @@ namespace VoteWeb.Areas.Admin.Controllers
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
+        [Area("Admin")]
         [HttpPost]
         public IActionResult Add(Author entity)
         {
             JResult _JResult = new JResult();
+            entity.CreateTime=DateTime.Now;
+            entity.IsDelete=0;
             DB.Authors.Add(entity);
             ReturnResult(DB.SaveChanges());
             return Json(_JResult);
@@ -44,6 +48,7 @@ namespace VoteWeb.Areas.Admin.Controllers
         /// </summary>
         /// <param name="AuthorID"></param>
         /// <returns></returns>
+        [Area("Admin")]
         [HttpPost]
         public IActionResult DeleteByAuthorID(long AuthorID)
         {
@@ -70,16 +75,31 @@ namespace VoteWeb.Areas.Admin.Controllers
         /// </summary>
         /// <param name="AuthorID"></param>
         /// <returns></returns>
+        [Area("Admin")]
         [HttpGet]
         public IActionResult GetEntityByAuthorID(long AuthorID)
         {
             var entity = DB.Authors.SingleOrDefault(x => x.AuthorID == AuthorID);
             if (entity != null)
             {
-                return View();
+                return View(entity);
             }
             return View("404.cshtml");
         }
+
+        /// <summary>
+        /// 查询作者列表
+        /// </summary>
+        /// <returns></returns>
+        [Area("Admin")]
+        [HttpGet]
+        public IActionResult List()
+        {
+            var list=DB.Authors.OrderByDescending(x=>x.AuthorID).ToList();
+            return View(list);
+        }
+        
+
         #endregion
 
         private JResult ReturnResult(int result)

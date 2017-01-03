@@ -1,0 +1,44 @@
+@model IEnumerable<Author>
+@{
+    ViewBag.Title = "所有作者列表";
+    ViewBag.FirstTab = "作者管理";
+    ViewBag.SecondTab = "作者列表";
+    ViewBag.ThirdTab = "所有作者列表";
+    Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+    <table class="table table-hover" id="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>邮箱</th>
+                <th>创建时间</th>
+                <th>简介</th>
+                <th>当前作品数量</th>
+                <th>操作<span class="badge badge-info pull-right">总数量:@Model.Count()</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Author item in Model)
+            {
+                <tr>
+                    <td>@item.AuthorID</td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td>@item.CreateTime</td>
+                    <td>@item.Introduction</td>
+                    <td>0</td>
+                    <td>
+                        <a asp-action="Update" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-warning">编辑</a>|
+                        <a asp-action="Detail" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-success">详情</a>|
+                        <a href="javascript:$('#form_Delete').submit();" class="btn btn-primary">添加作品</a>|
+                        <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
+                    </td>
+                </tr>
+                <form id="form_Delete" asp-action="DeleteByAuthorID" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" method="POST">
+                </form>
+            }
+        </tbody>
+    </table>
+</div>

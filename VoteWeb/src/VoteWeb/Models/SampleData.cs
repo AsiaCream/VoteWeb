@@ -53,7 +53,7 @@ namespace VoteWeb.Models
                 DB.SaveChanges();
                 #endregion
 
-                #region 初始化20条分类
+                #region 初始化60条分类
                 for (var i = 0; i < 60; i++)
                 {
                     var category = new Category
@@ -70,6 +70,20 @@ namespace VoteWeb.Models
                     DB.Categorys.Add(category);
                 }
                 
+                #endregion
+
+                #region 初始化20条个作者
+                for(var i=0;i<20;i++)
+                {
+                    var author=new Author
+                    {
+                        Name="作者"+i,
+                        Email=i+"@qq.com",
+                        CreateTime=DateTime.Now,
+                        Introduction="作者"+i+"简介"
+                    };
+                    DB.Authors.Add(author);
+                }
                 #endregion
             }
             DB.SaveChanges();
