@@ -34,10 +34,13 @@
                     <td>
                         <a asp-action="Update" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-warning">编辑</a>|
                         <a asp-action="Detail" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-success">查看</a>|
-                        <a href="javascript:;" class="btn btn-danger">删除</a>
+                        <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
                     </td>
                 </tr>
+                <form id="form_Delete" asp-action="DeleteByCategoryID" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" method="POST">
+                </form>
             }
         </tbody>
+        
     </table>
 </div>

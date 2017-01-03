@@ -6,3 +6,40 @@
     ViewBag.ThirdTab = "新增分类";
     Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+<div class="container-fluid">
+    <form asp-action="Add" asp-controller="Category" method="POST" role="form">
+        <fieldset>
+            <legend></legend>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">分类名</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" name="Title" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">优先级</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" name="PRI" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">开始时间</label>
+                <div class="col-md=10">
+                    <input type="datetime-local" class="form-control" name="StartTime" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">结束时间</label>
+                <div class="col-md=10">
+                    <input type="datetime-local" class="form-control" name="EndTime" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label"></label>
+                <div class="col-md=10">
+                    <input type="submit" class="form-control btn btn-success" value="添加" />
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

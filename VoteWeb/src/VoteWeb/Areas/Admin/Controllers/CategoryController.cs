@@ -5,16 +5,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VoteWeb.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http.Authentication;
 
 namespace VoteWeb.Areas.Admin.Controllers
 {
     [Authorize(Roles ="超级管理员")]
     public class CategoryController : Controller
     {
-        private VoteWebDBContext DB { get; set; }
-        public CategoryController(VoteWebDBContext _DBContext)
+        private VoteWebDBContext DB;
+        private UserManager<User> UserManager;
+        public CategoryController(VoteWebDBContext _DBContext,UserManager<User> _UserManager)
         {
             DB = _DBContext;
+            UserManager=_UserManager;
         }
 
         #region Add
@@ -35,6 +40,10 @@ namespace VoteWeb.Areas.Admin.Controllers
         public IActionResult Add(Category entity)
         {
             JResult _JResult = new JResult();
+            entity.CreateTime=DateTime.Now;
+            entity.IsDelete=0;
+            entity.IsEnd=0;
+            entity.UserID=1;
             DB.Categorys.Add(entity);
             ReturnResult(DB.SaveChanges());
             return Json(_JResult);
@@ -171,6 +180,14 @@ namespace VoteWeb.Areas.Admin.Controllers
                     break;
             }
             return _JResult;
+        }
+        /// <summary>
+        /// 获取当前操作用户
+        /// </summary>
+        /// <returns></returns>
+        private Task<User> GetCurrentUserAsync()
+        {
+            return UserManager.GetUserAsync(HttpContext.User);
         }
     }
 }
