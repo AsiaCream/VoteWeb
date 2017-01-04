@@ -32,7 +32,7 @@
                     <td>
                         <a asp-action="Update" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-warning">编辑</a>|
                         <a asp-action="Detail" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-success">详情</a>|
-                        <a href="javascript:$('#form_Delete').submit();" class="btn btn-primary">添加作品</a>|
+                        <a href="javascript:;" onclick="appendInfo(@item.AuthorID,@item.Name)" class="btn btn-primary" data-toggle="modal" data-target="#addPhotoModal">添加作品</a>|
                         <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
                     </td>
                 </tr>
@@ -42,3 +42,81 @@
         </tbody>
     </table>
 </div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="addPhotoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					添加作品
+				</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+                    <label class="control-label" for="txt_Author">作者</label>
+                    <input class="form-control" id="txt_Author" type="text" value="作者" disabled="disabled">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="txt_Title">作品标题</label>
+                    <input class="form-control" id="txt_Title" type="text" placeholder="作品标题">
+                </div>
+                <div class="form-group has-warning">
+                    <label class="control-label" for="txt_Introduction">作品简介</label>
+                    <textarea class="form-control" name="Introduction" id="txt_Introduction" rows="3"></textarea>
+                </div>
+                <div class="form-group kv-main">
+                    <label class="control-label">上传图片</label>
+                    <form enctype="multipart/form-data">
+                        <div class="form-group">
+                        <input type="file" class="file" name="PhotoURL" id="txt_PhotoURL" multiple data-overwrite-initial="false" data-min-file-count="2" />
+                        <!--<span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Button</button>
+                        </span>-->
+                    </div>
+                    </form>
+                </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消
+				</button>
+				<button type="button" class="btn btn-primary">
+					确定添加
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<script src="/scripts/Admin/jquery.min.js"></script>
+<script src="/scripts/Admin/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function () {
+    initFileInput("txt_PhotoURL", "/Admin/Photo/Add");
+});
+function appendInfo(AuthorID,Name){
+    alert(Name)
+    $("#txt_Author").html(Name);
+}
+//初始化fileinput控件（第一次初始化）
+function initFileInput(ctrlName, uploadUrl) {    
+    var control = $('#' + ctrlName); 
+
+    control.fileinput({
+        language: 'zh', //设置语言
+        uploadUrl: uploadUrl, //上传的地址
+        allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
+        showUpload: true, //是否显示上传按钮
+        showCaption: true,//是否显示标题
+        browseClass: "btn btn-primary", //按钮样式
+        maxFileSize:1000,
+        maxFilesNum:10,       
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>", 
+    });
+            
+}
+//添加记录的窗体处理
+          
+
+</script>
