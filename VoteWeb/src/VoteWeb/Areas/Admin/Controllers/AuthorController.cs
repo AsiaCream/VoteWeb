@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VoteWeb.Models;
+using Microsoft.AspNetCore.Hosting;
 
 namespace VoteWeb.Areas.Admin.Controllers
 {

@@ -12,7 +12,7 @@ namespace VoteWeb.Models
         public VoteWebDBContext(DbContextOptions option) : base(option) { }
         public DbSet<Category> Categorys { get; set; }
         public DbSet<Author> Authors { get; set; }
-        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Pictrue> Pictrues { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

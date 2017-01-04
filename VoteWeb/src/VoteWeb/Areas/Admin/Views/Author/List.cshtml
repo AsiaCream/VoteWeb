@@ -32,7 +32,7 @@
                     <td>
                         <a asp-action="Update" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-warning">编辑</a>|
                         <a asp-action="Detail" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-success">详情</a>|
-                        <a href="javascript:;" onclick="appendInfo(@item.AuthorID,@item.Name)" class="btn btn-primary" data-toggle="modal" data-target="#addPhotoModal">添加作品</a>|
+                        <a href="javascript:;" onclick="appendInfo(@item.AuthorID,'@item.Name')" class="btn btn-primary" data-toggle="modal" data-target="#addPhotoModal">添加作品</a>|
                         <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
                     </td>
                 </tr>
@@ -57,7 +57,8 @@
 			<div class="modal-body">
 				<div class="form-group">
                     <label class="control-label" for="txt_Author">作者</label>
-                    <input class="form-control" id="txt_Author" type="text" value="作者" disabled="disabled">
+                    <input class="form-control" id="txt_Author" type="text" />
+                    <input name="AuthorID" class="form-control" id="txt_AuthorID" type="hidden" />
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="txt_Title">作品标题</label>
@@ -67,11 +68,11 @@
                     <label class="control-label" for="txt_Introduction">作品简介</label>
                     <textarea class="form-control" name="Introduction" id="txt_Introduction" rows="3"></textarea>
                 </div>
-                <div class="form-group kv-main">
+                <div class="form-group">
                     <label class="control-label">上传图片</label>
                     <form enctype="multipart/form-data">
                         <div class="form-group">
-                        <input type="file" class="file" name="PhotoURL" id="txt_PhotoURL" multiple data-overwrite-initial="false" data-min-file-count="2" />
+                        <input type="file" class="file" name="files" id="txt_PictrueURL" multiple data-overwrite-initial="false" data-min-file-count="2" />
                         <!--<span class="input-group-btn">
                         <button class="btn btn-default" type="button">Button</button>
                         </span>-->
@@ -89,15 +90,15 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal -->
 </div>
-<script src="/scripts/Admin/jquery.min.js"></script>
-<script src="/scripts/Admin/bootstrap.min.js"></script>
+
 <script type="text/javascript">
 $(function () {
     initFileInput("txt_PhotoURL", "/Admin/Photo/Add");
+    $("#txt_Author").inputblur();
 });
 function appendInfo(AuthorID,Name){
-    alert(Name)
-    $("#txt_Author").html(Name);
+    $("#txt_Author").val(Name);
+    $("#txt_AuthorID").val() = AuthorID;
 }
 //初始化fileinput控件（第一次初始化）
 function initFileInput(ctrlName, uploadUrl) {    
