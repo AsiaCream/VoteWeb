@@ -95,8 +95,8 @@ namespace VoteWeb.Models
                     DB.Authors.Add(author);
                     DB.SaveChanges();
                     var authorFile=author.AuthorID.ToString()+author.Name;
-                    if(!Directory.Exists(rootFile+authorFile)){
-                        Directory.CreateDirectory(Directory.CreateDirectory(rootFile+authorFile));
+                    if(!Directory.Exists(rootFile+"\\"+authorFile)){
+                        Directory.CreateDirectory(rootFile+"\\"+authorFile);
                     }
                 }
                 #endregion
