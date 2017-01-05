@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace VoteWeb.Models
 {
@@ -72,7 +74,15 @@ namespace VoteWeb.Models
                 
                 #endregion
 
+                #region 初始化upload文件夹
+                var rootFile=".\\wwwroot\\upload";
+                if(!Directory.Exists(rootFile)){
+                        Directory.CreateDirectory(rootFile);
+                    }
+                #endregion
+                
                 #region 初始化20条个作者
+                
                 for(var i=0;i<20;i++)
                 {
                     var author=new Author
@@ -83,6 +93,11 @@ namespace VoteWeb.Models
                         Introduction="作者"+i+"简介"
                     };
                     DB.Authors.Add(author);
+                    DB.SaveChanges();
+                    var authorFile=author.AuthorID.ToString()+author.Name;
+                    if(!Directory.Exists(rootFile+authorFile)){
+                        Directory.CreateDirectory(Directory.CreateDirectory(rootFile+authorFile));
+                    }
                 }
                 #endregion
             }

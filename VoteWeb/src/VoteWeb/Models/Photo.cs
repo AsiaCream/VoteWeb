@@ -32,6 +32,10 @@ namespace VoteWeb.Models
         /// </summary>
         public string Introduction { get; set; }
         /// <summary>
+        /// 作品简介
+        /// </summary>
+        public int Votes { get; set; }
+        /// <summary>
         /// 是否展示
         /// </summary>
         public int IsDisplay { get; set; }

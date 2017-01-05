@@ -37,8 +37,8 @@ namespace VoteWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //IConfiguration Configuration;
-            //services.AddConfiguration(out Configuration);
+            // IConfiguration config;
+            // services.AddConfiguration(out config);
             services.AddDbContext<VoteWebDBContext>(x => x.UseSqlite("Data source=voteweb.db"));
 
             services.AddIdentity<User, IdentityRole<long>>(x =>
