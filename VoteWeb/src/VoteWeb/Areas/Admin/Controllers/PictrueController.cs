@@ -54,22 +54,25 @@ namespace VoteWeb.Areas.Admin.Controllers
         //    return Json(_JResult);
         //}
         [HttpPost]
-        public IActionResult Add(Pictrue entity)
+        public IActionResult Add(Pictrue entity,IFormFile file)
         {
             #region 添加参数
             entity.CreateTime = DateTime.Now;
             entity.IsDelete = 0;
-            entity.IsDisplay = 1; 
+            entity.IsDisplay = 1;
             #endregion
             JResult _JResult = new JResult();
             Author author = DB.Authors.SingleOrDefault(x => x.AuthorID == entity.AuthorID);
-            var fileName = Path.Combine("upload", 
-                DateTime.Now.ToString("MMddHHmmss") 
-                + entity.AuthorID 
-                + entity.Title + ".jpg");
-            using(var stream=new FileStream(Path.Combine(Env.WebRootPath, fileName), FileMode.CreateNew))
+            var authorFile = entity.AuthorID + author.Name;
+            var fileName = Path.Combine("upload",
+                authorFile
+                + entity.Title
+                + DateTime.Now.ToString("MMddHHmmss")
+                + ".jpg");
+            using (var stream = new FileStream(Path.Combine(Env.WebRootPath, fileName), FileMode.CreateNew))
             {
-                //entity.Img.CopyTo(stream);
+                file.CopyTo(stream);
+                entity.PictrueURL = fileName;
             }
             DB.Pictrues.Add(entity);
             ReturnResult(DB.SaveChanges());

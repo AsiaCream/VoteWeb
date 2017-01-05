@@ -36,10 +36,21 @@ namespace VoteWeb.Areas.Admin.Controllers
         public IActionResult Add(Author entity)
         {
             JResult _JResult = new JResult();
+            _JResult.Code = JResultCode.Failure;
+            _JResult.Msg = "操作失败";
             entity.CreateTime=DateTime.Now;
             entity.IsDelete=0;
             DB.Authors.Add(entity);
-            ReturnResult(DB.SaveChanges());
+            int result = DB.SaveChanges();
+            //创建作者成功后就创建一个文件夹
+            if (result > 0)
+            {
+                //上传文件的根目录
+                var rootFile = ".\\wwwroot\\upload\\";
+                _JResult.Code = JResultCode.Success;
+                _JResult.Msg = "操作成功";
+                Directory.CreateDirectory(rootFile + entity.AuthorID + entity.Name);
+            }
             return Json(_JResult);
         }
         #endregion
@@ -55,20 +66,25 @@ namespace VoteWeb.Areas.Admin.Controllers
         public IActionResult DeleteByAuthorID(long AuthorID)
         {
             JResult _JResult = new JResult();
+            _JResult.Code = JResultCode.Failure;
+            _JResult.Msg = "操作失败";
             var entity = DB.Authors.SingleOrDefault(x => x.AuthorID == AuthorID);
             if (entity != null)
             {
-                //保存文件的upload文件夹路径
-                var rootFile = ".\\wwwroot\\upload\\";
-                //删除数据库中保存的作者信息，删除保存作者作品的文件夹
                 DB.Authors.Remove(entity);
-                ReturnResult(DB.SaveChanges());
-                //删除作者文件夹
-                Directory.Delete(rootFile + AuthorID.ToString() + entity.Name,true);
-                return Json(_JResult);
+                int result = DB.SaveChanges();
+                if (result > 0)
+                {
+                    //保存文件的upload文件夹路径
+                    var rootFile = ".\\wwwroot\\upload\\";
+                    //删除数据库中保存的作者信息，删除保存作者作品的文件夹
+                    _JResult.Code = JResultCode.Success;
+                    _JResult.Msg = "操作成功";
+                    //删除作者文件夹
+                    Directory.Delete(rootFile + AuthorID.ToString() + entity.Name, true);
+                    return Json(_JResult);
+                }
             }
-            _JResult.Code = JResultCode.Warning;
-            _JResult.Msg = "未找符合条件的信息";
             return Json(_JResult);
         }
         #endregion
