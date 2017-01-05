@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace VoteWeb.Models
 {
-    public class Photo
+    public class Pictrue
     {
         /// <summary>
         /// 作者ID
         /// </summary>
-        public long PhotoID { get; set; }
+        public long PictrueID { get; set; }
         /// <summary>
         /// 作品名称
         /// </summary>
@@ -18,7 +19,7 @@ namespace VoteWeb.Models
         /// <summary>
         /// 作品地址
         /// </summary>
-        public string PhotoURL { get; set; }
+        public string PictrueURL { get; set; }
         /// <summary>
         /// 作者ID
         /// </summary>
