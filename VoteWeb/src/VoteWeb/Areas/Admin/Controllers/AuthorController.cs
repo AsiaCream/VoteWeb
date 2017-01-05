@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VoteWeb.Models;
 using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace VoteWeb.Areas.Admin.Controllers
 {
@@ -57,8 +58,14 @@ namespace VoteWeb.Areas.Admin.Controllers
             var entity = DB.Authors.SingleOrDefault(x => x.AuthorID == AuthorID);
             if (entity != null)
             {
+                //保存文件的upload文件夹路径
+                var rootFile = ".\\wwwroot\\upload\\";
+                //删除数据库中保存的作者信息，删除保存作者作品的文件夹
                 DB.Authors.Remove(entity);
-                return Json(ReturnResult(DB.SaveChanges()));
+                ReturnResult(DB.SaveChanges());
+                //删除作者文件夹
+                Directory.Delete(rootFile + AuthorID.ToString() + entity.Name,true);
+                return Json(_JResult);
             }
             _JResult.Code = JResultCode.Warning;
             _JResult.Msg = "未找符合条件的信息";
