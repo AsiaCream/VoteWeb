@@ -15,7 +15,7 @@
                 <th>邮箱</th>
                 <th>创建时间</th>
                 <th>简介</th>
-                <th>当前作品数量</th>
+                <th>作品数量</th>
                 <th>操作<span class="badge badge-info pull-right">总数量:@Model.Count()</span></th>
             </tr>
         </thead>
@@ -30,9 +30,10 @@
                     <td>@item.Introduction</td>
                     <td>0</td>
                     <td>
-                        <a asp-action="Update" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-warning">编辑</a>|
+                        <a asp-action="Update" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-default">编辑</a>|
                         <a asp-action="Detail" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-success">详情</a>|
                         <a href="javascript:;" onclick="appendInfo(@item.AuthorID,'@item.Name')" class="btn btn-primary" data-toggle="modal" data-target="#addPhotoModal">添加作品</a>|
+                        <a href="javascript:;" class="btn btn-warning">作品列表</a>|
                         <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
                     </td>
                 </tr>
@@ -55,32 +56,33 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<div class="form-group">
-                    <label class="control-label" for="txt_Author">作者</label>
-                    <input class="form-control" id="txt_Author" type="text" />
-                    <input name="AuthorID" class="form-control" id="txt_AuthorID" type="hidden" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="txt_Title">作品标题</label>
-                    <input class="form-control" id="txt_Title" type="text" placeholder="作品标题">
-                </div>
-                <div class="form-group has-warning">
-                    <label class="control-label" for="txt_Introduction">作品简介</label>
-                    <textarea class="form-control" name="Introduction" id="txt_Introduction" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">上传图片</label>
-                    <form enctype="multipart/form-data">
-                        <div class="form-group">
-                        <input type="file" class="file" name="file" id="txt_PictrueURL" multiple data-overwrite-initial="false" data-min-file-count="2" />
+                <form id="form_AddPictrue" asp-action="Add" asp-controller="Pictrue" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="control-label" for="txt_Author">作者</label>
+                        <input class="form-control" id="txt_Author" type="text" />
+                        <input name="AuthorID" class="form-control" id="txt_AuthorID" type="hidden" />
                     </div>
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <label class="control-label" for="txt_Title">作品标题</label>
+                        <input class="form-control" name="Title" id="txt_Title" type="text" placeholder="作品标题">
+                    </div>
+                    <div class="form-group has-warning">
+                        <label class="control-label" for="txt_Introduction">作品简介</label>
+                        <textarea class="form-control" name="Introduction" id="txt_Introduction" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">上传图片</label>
+
+                        <div class="form-group">
+                            <input type="file"  name="file" id="txt_PictrueURL" multiple data-overwrite-initial="false" data-min-file-count="2" />
+                        </div>
+                    </div>
+                </form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消
 				</button>
-				<button type="button" class="btn btn-primary">
+				<button type="button" class="btn btn-primary" id="btn_Submit">
 					确定添加
 				</button>
 			</div>
@@ -90,30 +92,33 @@
 
 <script type="text/javascript">
 $(function () {
-    initFileInput("txt_PhotoURL", "/Admin/Photo/Add");
+    //initFileInput("txt_PhotoURL", "/Admin/Photo/Add");
     $("#txt_Author").inputblur();
+    $("#btn_Submit").click(function(){
+        $("#form_AddPictrue").submit();
+    });
 });
 function appendInfo(AuthorID,Name){
     $("#txt_Author").val(Name);
-    $("#txt_AuthorID").val() = AuthorID;
+    $("#txt_AuthorID").val(AuthorID);
 }
 //初始化fileinput控件（第一次初始化）
-function initFileInput(ctrlName, uploadUrl) {    
-    var control = $('#' + ctrlName); 
+//function initFileInput(ctrlName, uploadUrl) {    
+//    var control = $('#' + ctrlName); 
 
-    control.fileinput({
-        language: 'zh', //设置语言
-        uploadUrl: uploadUrl, //上传的地址
-        allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
-        showUpload: true, //是否显示上传按钮
-        showCaption: true,//是否显示标题
-        browseClass: "btn btn-primary", //按钮样式
-        maxFileSize:1000,
-        maxFilesNum:10,       
-        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>", 
-    });
+//    control.fileinput({
+//        language: 'zh', //设置语言
+//        uploadUrl: uploadUrl, //上传的地址
+//        allowedFileExtensions : ['jpg', 'png','gif'],//接收的文件后缀
+//        showUpload: true, //是否显示上传按钮
+//        showCaption: true,//是否显示标题
+//        browseClass: "btn btn-primary", //按钮样式
+//        maxFileSize:1000,
+//        maxFilesNum:10,       
+//        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>", 
+//    });
             
-}
+//}
 //添加记录的窗体处理
           
 

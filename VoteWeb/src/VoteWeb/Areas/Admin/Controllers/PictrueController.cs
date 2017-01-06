@@ -53,6 +53,7 @@ namespace VoteWeb.Areas.Admin.Controllers
         //    _JResult.Msg = "添加成功";
         //    return Json(_JResult);
         //}
+        [Area("Admin")]
         [HttpPost]
         public IActionResult Add(Pictrue entity,IFormFile file)
         {
@@ -63,16 +64,15 @@ namespace VoteWeb.Areas.Admin.Controllers
             #endregion
             JResult _JResult = new JResult();
             Author author = DB.Authors.SingleOrDefault(x => x.AuthorID == entity.AuthorID);
-            var authorFile = entity.AuthorID + author.Name;
-            var fileName = Path.Combine("upload",
-                authorFile
-                + entity.Title
+            var authorFile = "\\upload\\" + entity.AuthorID + author.Name;
+            var fileName = Path.Combine(
+                entity.Title
                 + DateTime.Now.ToString("MMddHHmmss")
                 + ".jpg");
-            using (var stream = new FileStream(Path.Combine(Env.WebRootPath, fileName), FileMode.CreateNew))
+            using (var stream = new FileStream(Path.Combine(Env.WebRootPath+authorFile, fileName), FileMode.CreateNew))
             {
                 file.CopyTo(stream);
-                entity.PictrueURL = fileName;
+                entity.PictrueURL = authorFile + "\\" + fileName;
             }
             DB.Pictrues.Add(entity);
             ReturnResult(DB.SaveChanges());

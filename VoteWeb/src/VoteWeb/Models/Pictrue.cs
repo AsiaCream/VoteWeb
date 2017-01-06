@@ -25,6 +25,10 @@ namespace VoteWeb.Models
         /// </summary>
         public long AuthorID { get; set; }
         /// <summary>
+        /// 分类ID
+        /// </summary>
+        public long CategoryID { get; set; }
+        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
