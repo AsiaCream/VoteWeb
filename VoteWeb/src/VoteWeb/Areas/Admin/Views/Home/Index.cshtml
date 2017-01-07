@@ -1,4 +1,53 @@
 ﻿@{
     ViewBag.Title = "后台主页";
+    ViewBag.FirstTab = "配置管理";
+    ViewBag.SecondTab = "配置列表";
+    ViewBag.ThirdTab = "配置文件";
     Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
-}<h1>Index</h1>
+}
+<style>
+    .table tr{
+        cursor: default;
+        color: rgb(54,198,222);
+    }
+</style>
+<div class="container-fluid">
+        <table class="table table-condensed" style="width: 80%;">
+        <tbody>
+            <tr>
+                <th>首页Title</th>
+                <td>首页 - 投票网站</td>
+            </tr>
+            <tr>
+                <th>首页Keywords</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>首页Description</th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>首页brand</th>
+                <td>投票网</td>
+            </tr>
+            <tr>
+                <th>首页版权信息</th>
+                <td>2017 ©版权所有.</td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <th>后台Title</th>
+                <td>管理后台 - 投票网站</td>
+            </tr>
+            <tr>
+                <th>后台brand</th>
+                <td>管理后台</td>
+            </tr>
+            <tr>
+                <th>后台版权信息</th>
+                <td>2017 © Design by AsiaCream. 个人博客</td>
+            </tr>
+        </tbody>
+    </table>    
+</div>

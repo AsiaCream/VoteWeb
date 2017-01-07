@@ -3,10 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - VoteWeb</title>
+    <title>@ViewData["Title"] - 投票网站</title>
     <meta name="keywords" content="关键字" />
     <meta name="description" content="描述" />
     <link rel="stylesheet" href="/styles/Simplex.css" />
+    <link rel="shortcut icon" href="/img/favicon.ico" />
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
 </head>
 <body>
@@ -20,7 +21,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">恒房网</a>
+                <a class="navbar-brand" href="/">投票网</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -60,7 +61,7 @@
     </div>
     <footer class="footer">
             <div class="container">
-                <p class="text-right text-muted">&copy; 版权所有.</p>
+                <p class="text-right text-muted">@DateTime.Now.Year &copy; 版权所有.</p>
             </div>
         </footer>
 
