@@ -16,13 +16,17 @@ namespace VoteWeb.Areas.Admin.Controllers
 {
     public class PictureController : Controller
     {
+        #region 构造函数
         private IHostingEnvironment Env;
         private VoteWebDBContext DB;
-        public PictureController(IHostingEnvironment _env,VoteWebDBContext _db)
+        public PictureController(IHostingEnvironment _env, VoteWebDBContext _db)
         {
             Env = _env;
             DB = _db;
-        }
+        } 
+        #endregion
+
+        #region Add
         /// <summary>
         /// 新增作品
         /// </summary>
@@ -57,7 +61,7 @@ namespace VoteWeb.Areas.Admin.Controllers
         //}
         [Area("Admin")]
         [HttpPost]
-        public IActionResult Add(Picture entity,IFormFile file)
+        public IActionResult Add(Picture entity, IFormFile file)
         {
             #region 添加参数
             entity.CreateTime = DateTime.Now;
@@ -70,7 +74,7 @@ namespace VoteWeb.Areas.Admin.Controllers
                 entity.Title
                 + DateTime.Now.ToString("MMddHHmmss")
                 + ".jpg");
-            using (var stream = new FileStream(Path.Combine(Env.WebRootPath+authorFile, fileName), FileMode.CreateNew))
+            using (var stream = new FileStream(Path.Combine(Env.WebRootPath + authorFile, fileName), FileMode.CreateNew))
             {
                 file.CopyTo(stream);
                 entity.PictureURL = fileName;
@@ -78,7 +82,44 @@ namespace VoteWeb.Areas.Admin.Controllers
             DB.Pictures.Add(entity);
             return Json(ReturnResult(DB.SaveChanges()));
         }
+        #endregion
 
+        #region Delete
+        /// <summary>
+        /// 根据PictureID删除作品  DeleteByPictureID
+        /// </summary>
+        /// <param name="PictureID"></param>
+        /// <returns></returns>
+        [Area("Admin")]
+        [HttpPost]
+        public IActionResult Delete(long PictureID)
+        {
+            JResult _JResult = new JResult();
+            _JResult.Code = JResultCode.Failure;
+            _JResult.Msg = "操作失败";
+            var entity = DB.Pictures.SingleOrDefault(x => x.PictureID == PictureID);
+            var author = DB.Authors.SingleOrDefault(x => x.AuthorID == entity.AuthorID);
+            if (entity != null)
+            {
+                //保存文件的upload文件夹路径
+                var rootPath = ".\\wwwroot\\upload\\";
+                //删除文件
+                //Directory.Delete(rootPath + author.ToString() + author.Name, true);
+                string filePath = rootPath + author.AuthorID + author.Name + "\\" + entity.PictureURL;
+                FileInfo fileInfo = new FileInfo(filePath);
+                fileInfo.Delete();
+                DB.Pictures.Remove(entity);
+                return Json(DB.SaveChanges());
+            }
+            return Json(_JResult);
+        }
+        #endregion
+
+        #region Update
+
+        #endregion
+
+        #region Select
         /// <summary>
         /// 根据AuthorID查询作品信息  GetListByAuthorID
         /// </summary>
@@ -88,15 +129,15 @@ namespace VoteWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult List(long AuthorID)
         {
-            PictureListViewModel _viewmodel=new PictureListViewModel();
-            _viewmodel.Pictures=DB.Pictures.Where(x=>x.AuthorID==AuthorID)
-            .OrderByDescending(x=>x.Votes)
-            .OrderByDescending(x=>x.CreateTime)
-            .ThenByDescending(x=>x.IsDisplay)
-            .ThenBy(x=>x.IsDelete)
+            PictureListViewModel _viewmodel = new PictureListViewModel();
+            _viewmodel.Pictures = DB.Pictures.Where(x => x.AuthorID == AuthorID)
+            .OrderByDescending(x => x.Votes)
+            .OrderByDescending(x => x.CreateTime)
+            .ThenByDescending(x => x.IsDisplay)
+            .ThenBy(x => x.IsDelete)
             .ToList();
-            _viewmodel.author=DB.Authors.SingleOrDefault(x=>x.AuthorID==AuthorID);
-            return View("/Areas/Admin/Views/Picture/List.cshtml",_viewmodel);
+            _viewmodel.author = DB.Authors.SingleOrDefault(x => x.AuthorID == AuthorID);
+            return View("/Areas/Admin/Views/Picture/List.cshtml", _viewmodel);
         }
 
         /// <summary>
@@ -108,23 +149,24 @@ namespace VoteWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult CList(long CategoryID)
         {
-            PictureCListViewModel _viewmodel=new PictureCListViewModel();
-            _viewmodel.Pictures=DB.Pictures.Where(x=>x.CategoryID==CategoryID)
-            .OrderByDescending(x=>x.Votes)
-            .OrderByDescending(x=>x.CreateTime)
-            .ThenByDescending(x=>x.IsDisplay)
-            .ThenBy(x=>x.IsDelete)
+            PictureCListViewModel _viewmodel = new PictureCListViewModel();
+            _viewmodel.Pictures = DB.Pictures.Where(x => x.CategoryID == CategoryID)
+            .OrderByDescending(x => x.Votes)
+            .OrderByDescending(x => x.CreateTime)
+            .ThenByDescending(x => x.IsDisplay)
+            .ThenBy(x => x.IsDelete)
             .ToList();
-            _viewmodel.category=DB.Categorys.SingleOrDefault(x=>x.CategoryID==CategoryID);
-            return View("/Areas/Admin/Views/Picture/CList.cshtml",_viewmodel);
+            _viewmodel.category = DB.Categorys.SingleOrDefault(x => x.CategoryID == CategoryID);
+            return View("/Areas/Admin/Views/Picture/CList.cshtml", _viewmodel);
         }
         [Area("Admin")]
         [HttpGet]
         public IActionResult Detail(long PictureID)
         {
-            var entity=DB.Pictures.SingleOrDefault(x=>x.PictureID==PictureID);
-            return View("/Areas/Admin/Views/Picture/Detail.cshtml",entity);
-        }
+            var entity = DB.Pictures.SingleOrDefault(x => x.PictureID == PictureID);
+            return View("/Areas/Admin/Views/Picture/Detail.cshtml", entity);
+        } 
+        #endregion
 
         private JResult ReturnResult(int result)
         {

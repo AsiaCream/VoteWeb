@@ -8,14 +8,29 @@ namespace VoteWeb.Models
 {
     public enum JResultCode
     {
+        /// <summary>
+        /// 失败
+        /// </summary>
         [Description("失败")]
         Failure,
+        /// <summary>
+        /// 成功
+        /// </summary>
         [Description("成功")]
         Success,
+        /// <summary>
+        /// 错误
+        /// </summary>
         [Description("错误")]
         Error,
+        /// <summary>
+        /// 警告
+        /// </summary>
         [Description("警告")]
         Warning,
+        /// <summary>
+        /// 询问
+        /// </summary>
         [Description("询问")]
         Confirm
     }
