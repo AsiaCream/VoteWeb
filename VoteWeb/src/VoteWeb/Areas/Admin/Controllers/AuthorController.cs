@@ -120,6 +120,9 @@ namespace VoteWeb.Areas.Admin.Controllers
         public IActionResult List()
         {
             var list=DB.Authors.OrderByDescending(x=>x.AuthorID).ToList();
+            ViewBag.Categorys=DB.Categorys.Where(x=>x.IsDelete==0)
+            .OrderByDescending(x=>x.CreateTime)
+            .ToList();
             return View(list);
         }
         

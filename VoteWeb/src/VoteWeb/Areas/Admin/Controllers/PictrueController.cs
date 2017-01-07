@@ -80,7 +80,7 @@ namespace VoteWeb.Areas.Admin.Controllers
 
         [Area("Admin")]
         [HttpPost]
-        public IActionResult List(long AuthorID)
+        public IActionResult GetListByAuthorID(long AuthorID)
         {
             var list=DB.Pictrues.Where(x=>x.AuthorID==AuthorID&&x.IsDelete==0)
             .OrderByDescending(x=>x.CreateTime)

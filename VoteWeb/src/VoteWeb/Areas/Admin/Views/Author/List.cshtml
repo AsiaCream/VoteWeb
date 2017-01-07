@@ -33,7 +33,7 @@
                         <a asp-action="Update" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-default">编辑</a>|
                         <a asp-action="Detail" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-success">详情</a>|
                         <a href="javascript:;" onclick="appendInfo(@item.AuthorID,'@item.Name')" class="btn btn-primary" data-toggle="modal" data-target="#addPhotoModal">添加作品</a>|
-                        <a href="javascript:;" class="btn btn-warning">作品列表</a>|
+                        <a asp-action="GetListByAuthorID" asp-controller="Pictrue" asp-route-AuthorID="@item.AuthorID" class="btn btn-warning">作品列表</a>|
                         <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
                     </td>
                 </tr>
@@ -64,7 +64,16 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="txt_Title">作品标题</label>
-                        <input class="form-control" name="Title" id="txt_Title" type="text" placeholder="作品标题">
+                        <input class="form-control" name="Title" id="txt_Title" type="text" placeholder="作品标题" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="txt_Category">分类</label>
+                        <input class="form-control" name="CategoryID" id="txt_CategoryID" type="hidden" />
+                        <select class="form-control" id="select_category_list">
+                            @foreach(Category category in ViewBag.Categorys){
+                                <option data-categoryid="@category.CategoryID">@category.Title</option>
+                            }
+                        </select>
                     </div>
                     <div class="form-group has-warning">
                         <label class="control-label" for="txt_Introduction">作品简介</label>
@@ -97,6 +106,14 @@ $(function () {
     $("#btn_Submit").click(function(){
         $("#form_AddPictrue").submit();
     });
+
+    var select_list=$("#select_category_list");
+    var categoryid=select_list.find("option:selected").attr("data-categoryid");
+    select_list.change(function(){
+        var newcategoryid=select_list.find("option:selected").attr("data-categoryid");
+        categoryid=newcategoryid;
+    });
+
 });
 function appendInfo(AuthorID,Name){
     $("#txt_Author").val(Name);
