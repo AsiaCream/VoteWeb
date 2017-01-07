@@ -1,4 +1,4 @@
-@model PictureListViewModel
+@model PictureCListViewModel
 @{
     ViewBag.Title = "作品列表";
     ViewBag.FirstTab = "作品管理";
@@ -28,12 +28,20 @@
     <table class="table" id="table">
         <tbody>
             <tr>
-                <th>姓名</th>
-                <td>@Model.author.Name</td>
-                <th>Email</th>
-                <td>@Model.author.Email</td>
+                <th>分类名</th>
+                <td>@Model.category.Title</td>
+                <th>优先级</th>
+                <td>@Model.category.PRI</td>
                 <th>创建时间</th>
-                <td>@Model.author.CreateTime</td>
+                <td>@Model.category.CreateTime.ToString("yyyy/MM/dd")</td>
+            </tr>
+            <tr>
+                <th>开始时间</th>
+                <td>@Model.category.StartTime.ToString("yyyy/MM/dd")</td>
+                <th></th>
+                <td></td>
+                <th>结束时间</th>
+                <td>@Model.category.EndTime.ToString("yyyy/MM/dd")</td>
             </tr>
         </tbody>
     </table>

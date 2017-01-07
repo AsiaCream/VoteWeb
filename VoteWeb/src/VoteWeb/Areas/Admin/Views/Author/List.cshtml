@@ -32,7 +32,7 @@
                     <td>
                         <a asp-action="Update" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-success">编辑</a>|
                         <a href="javascript:;" onclick="appendInfo(@item.AuthorID,'@item.Name')" class="btn btn-primary" data-toggle="modal" data-target="#addPhotoModal">添加作品</a>|
-                        <a asp-action="GetListByAuthorID" asp-controller="Picture" asp-route-AuthorID="@item.AuthorID" class="btn btn-warning">作品列表</a>|
+                        <a asp-action="List" asp-controller="Picture" asp-route-AuthorID="@item.AuthorID" class="btn btn-warning">作品列表</a>|
                         <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
                     </td>
                 </tr>
@@ -107,10 +107,11 @@ $(function () {
     });
 
     var select_list=$("#select_category_list");
-    var categoryid=select_list.find("option:selected").attr("data-categoryid");
+    var default_categoryid=select_list.find("option:selected").attr("data-categoryid");
+    $("#txt_CategoryID").val(default_categoryid);
     select_list.change(function(){
         var newcategoryid=select_list.find("option:selected").attr("data-categoryid");
-        categoryid=newcategoryid;
+        $("#txt_CategoryID").val(newcategoryid);
     });
 
 });

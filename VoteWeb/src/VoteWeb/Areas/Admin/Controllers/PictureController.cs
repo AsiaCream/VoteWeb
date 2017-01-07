@@ -1,14 +1,16 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VoteWeb.Models;
 using VoteWeb.ViewModels;
+using VoteWeb.ViewModels.Admin;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using System.IO;
+
 
 namespace VoteWeb.Areas.Admin.Controllers
 {
@@ -78,17 +80,51 @@ namespace VoteWeb.Areas.Admin.Controllers
             return Json(_JResult);
         }
 
+        /// <summary>
+        /// 根据AuthorID查询作品信息  GetListByAuthorID
+        /// </summary>
+        /// <param name="AuthorID">作者信息</param>
+        /// <returns></returns>
         [Area("Admin")]
         [HttpGet]
-        public IActionResult GetListByAuthorID(long AuthorID)
+        public IActionResult List(long AuthorID)
         {
-            var list=DB.Pictures.Where(x=>x.AuthorID==AuthorID)
+            PictureListViewModel _viewmodel=new PictureListViewModel();
+            _viewmodel.Pictures=DB.Pictures.Where(x=>x.AuthorID==AuthorID)
             .OrderByDescending(x=>x.Votes)
             .OrderByDescending(x=>x.CreateTime)
             .ThenByDescending(x=>x.IsDisplay)
             .ThenBy(x=>x.IsDelete)
             .ToList();
-            return View("/Areas/Admin/Views/Picture/List.cshtml",list);
+            _viewmodel.author=DB.Authors.SingleOrDefault(x=>x.AuthorID==AuthorID);
+            return View("/Areas/Admin/Views/Picture/List.cshtml",_viewmodel);
+        }
+
+        /// <summary>
+        /// 根据CategoryID查询作品信息  GetListByCategoryID
+        /// </summary>
+        /// <param name="CategoryID">分类信息</param>
+        /// <returns></returns>
+        [Area("Admin")]
+        [HttpGet]
+        public IActionResult CList(long CategoryID)
+        {
+            PictureCListViewModel _viewmodel=new PictureCListViewModel();
+            _viewmodel.Pictures=DB.Pictures.Where(x=>x.CategoryID==CategoryID)
+            .OrderByDescending(x=>x.Votes)
+            .OrderByDescending(x=>x.CreateTime)
+            .ThenByDescending(x=>x.IsDisplay)
+            .ThenBy(x=>x.IsDelete)
+            .ToList();
+            _viewmodel.category=DB.Categorys.SingleOrDefault(x=>x.CategoryID==CategoryID);
+            return View("/Areas/Admin/Views/Picture/CList.cshtml",_viewmodel);
+        }
+        [Area("Admin")]
+        [HttpGet]
+        public IActionResult Detail(long PictureID)
+        {
+            var entity=DB.Pictures.SingleOrDefault(x=>x.PictureID==PictureID);
+            return View("/Areas/Admin/Views/Picture/Detail.cshtml",entity);
         }
 
         private JResult ReturnResult(int result)
