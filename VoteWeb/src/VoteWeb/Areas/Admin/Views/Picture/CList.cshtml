@@ -3,7 +3,6 @@
     ViewBag.Title = "作品列表";
     ViewBag.FirstTab = "作品管理";
     ViewBag.SecondTab = "作品列表";
-    ViewBag.ThirdTab = "所有作品列表";
     Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <style>
@@ -68,9 +67,9 @@
                     <td>@item.CreateTime</td>
                     <td>@item.Votes</td>
                     <td>
-                        <a asp-action="Update" asp-controller="Picture" asp-route-PictureID="@item.PictureID" class="btn btn-success">编辑</a>|
-                        <a asp-action="Detail" asp-controller="Picture" asp-route-PictureID="@item.PictureID" class="btn btn-primary">查看详情</a>|
-                        <a href="javascript:;" class="btn btn-danger">删除</a>
+                        <a asp-action="Update" asp-controller="Picture" asp-route-PictureID="@item.PictureID" class="btn btn-success btn-sm">编辑</a>|
+                        <a asp-action="Detail" asp-controller="Picture" asp-route-PictureID="@item.PictureID" class="btn btn-primary btn-sm">查看详情</a>|
+                        <a href="javascript:;" class="btn btn-danger btn-sm">删除</a>
                     </td>
                 </tr>
                 <form id="form_Delete" asp-action="DeleteByPictureID" asp-controller="Picture" method="POST">

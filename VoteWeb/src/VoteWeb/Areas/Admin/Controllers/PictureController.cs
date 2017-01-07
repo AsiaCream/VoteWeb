@@ -76,8 +76,7 @@ namespace VoteWeb.Areas.Admin.Controllers
                 entity.PictureURL = fileName;
             }
             DB.Pictures.Add(entity);
-            ReturnResult(DB.SaveChanges());
-            return Json(_JResult);
+            return Json(ReturnResult(DB.SaveChanges()));
         }
 
         /// <summary>

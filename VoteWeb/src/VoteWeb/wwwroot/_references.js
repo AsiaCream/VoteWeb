@@ -21,6 +21,7 @@
 /// <reference path="assets/js/application.js" />
 /// <reference path="assets/js/bootstrap.js" />
 /// <reference path="assets/js/jquery-1.8.3.min.js" />
+/// <reference path="lib/jquery/dist/jquery.js" />
 /// <reference path="lib/jquery-validation/dist/jquery.validate.js" />
 /// <reference path="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" />
 /// <reference path="scripts/admin/app.js" />

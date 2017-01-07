@@ -3,7 +3,6 @@
     ViewBag.Title = "所有分类列表";
     ViewBag.FirstTab = "分类管理";
     ViewBag.SecondTab = "分类列表";
-    ViewBag.ThirdTab = "所有分类列表";
     Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div class="container-fluid">
@@ -27,15 +26,15 @@
                     <td>@item.CategoryID</td>
                     <td>@item.Title</td>
                     <td>@item.PRI</td>
-                    <td>@item.CreateTime</td>
-                    <td>@item.StartTime</td>
-                    <td>@item.EndTime</td>
+                    <td>@item.CreateTime.ToString("yyyy/MM/dd")</td>
+                    <td>@item.StartTime.ToString("yyyy/MM/dd")</td>
+                    <td>@item.EndTime.ToString("yyyy/MM/dd")</td>
                     <td>@item.UserID</td>
                     <td>
-                        <a asp-action="Update" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-success">编辑</a>|
-                        <a asp-action="Detail" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-primary">详情</a>|
-                        <a asp-action="CList" asp-controller="Picture" asp-route-CategoryID="@item.CategoryID" class="btn btn-warning">查看</a>|
-                        <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
+                        <a asp-action="Update" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-success btn-sm">编辑</a>|
+                        <a asp-action="Detail" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-primary btn-sm">详情</a>|
+                        <a asp-action="CList" asp-controller="Picture" asp-route-CategoryID="@item.CategoryID" class="btn btn-warning btn-sm">查看</a>|
+                        <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger btn-sm">删除</a>
                     </td>
                 </tr>
                 <form id="form_Delete" asp-action="DeleteByCategoryID" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" method="POST">

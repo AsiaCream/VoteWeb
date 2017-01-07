@@ -8,10 +8,10 @@ namespace VoteWeb.Models
 {
     public enum JResultCode
     {
-        [Description("成功")]
-        Success,
         [Description("失败")]
         Failure,
+        [Description("成功")]
+        Success,
         [Description("错误")]
         Error,
         [Description("警告")]

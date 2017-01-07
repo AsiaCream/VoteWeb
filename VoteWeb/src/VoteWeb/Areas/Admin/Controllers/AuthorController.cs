@@ -124,7 +124,7 @@ namespace VoteWeb.Areas.Admin.Controllers
                 entity.Introduction=newentity.Introduction;
                 entity.IsDelete=newentity.IsDelete;
                 #endregion
-                ReturnResult(DB.SaveChanges());
+                return Json(ReturnResult(DB.SaveChanges()));
             }
             return Json(_JResult);
         }

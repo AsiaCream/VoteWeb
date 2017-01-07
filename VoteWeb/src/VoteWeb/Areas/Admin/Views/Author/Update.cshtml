@@ -2,8 +2,7 @@
 @{
     ViewBag.Title = "修改作者";
     ViewBag.FirstTab = "作者管理";
-    ViewBag.SecondTab = "作者列表";
-    ViewBag.ThirdTab = "修改作者";
+    ViewBag.SecondTab = "修改作者";
     Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div class="container-fluid">
@@ -32,10 +31,10 @@
             </div>
             <div class="form-group">
                 <div class="col-md-6">
-                    <a asp-action="List" asp-controller="Author" class="form-control btn btn-danger">取消</a>
+                    <a asp-action="List" asp-controller="Author" class="form-control btn btn-danger btn-sm">取消</a>
                 </div>
                 <div class="col-md-6">
-                    <input type="submit" class="form-control btn btn-success" value="添加" />
+                    <input type="submit" class="form-control btn btn-success btn-sm" value="添加" />
                 </div>
             </div>
         </fieldset>

@@ -2,7 +2,6 @@
     ViewBag.Title = "新增分类";
     ViewBag.FirstTab = "分类管理";
     ViewBag.SecondTab = "分类列表";
-    ViewBag.ThirdTab = "新增分类";
     Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div class="container-fluid">
@@ -34,9 +33,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="" class="col-md-2 control-label"></label>
-                <div class="col-md=10">
-                    <input type="submit" class="form-control btn btn-success" value="添加" />
+                <div class="col-md-6">
+                    <a asp-action="List" asp-controller="Category" class="form-control btn btn-danger btn-sm">取消</a>
+                </div>
+                <div class="col-md-6">
+                    <input type="submit" class="form-control btn btn-success btn-sm" value="添加" />
                 </div>
             </div>
         </fieldset>
