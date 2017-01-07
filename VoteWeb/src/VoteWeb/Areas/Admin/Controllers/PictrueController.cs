@@ -63,8 +63,7 @@ namespace VoteWeb.Areas.Admin.Controllers
             entity.IsDisplay = 1;
             #endregion
             JResult _JResult = new JResult();
-            Author author = DB.Authors.SingleOrDefault(x => x.AuthorID == entity.AuthorID);
-            var authorFile = "\\upload\\" + entity.AuthorID + author.Name;
+            var authorFile = "\\upload\\" + entity.AuthorID;
             var fileName = Path.Combine(
                 entity.Title
                 + DateTime.Now.ToString("MMddHHmmss")
@@ -72,11 +71,21 @@ namespace VoteWeb.Areas.Admin.Controllers
             using (var stream = new FileStream(Path.Combine(Env.WebRootPath+authorFile, fileName), FileMode.CreateNew))
             {
                 file.CopyTo(stream);
-                entity.PictrueURL = authorFile + "\\" + fileName;
+                entity.PictrueURL = fileName;
             }
             DB.Pictrues.Add(entity);
             ReturnResult(DB.SaveChanges());
             return Json(_JResult);
+        }
+
+        [Area("Admin")]
+        [HttpPost]
+        public IActionResult List(long AuthorID)
+        {
+            var list=DB.Pictrues.Where(x=>x.AuthorID==AuthorID&&x.IsDelete==0)
+            .OrderByDescending(x=>x.CreateTime)
+            .ToList();
+            return View(list);
         }
 
         private JResult ReturnResult(int result)

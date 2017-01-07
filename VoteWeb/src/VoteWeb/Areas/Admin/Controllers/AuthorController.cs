@@ -49,7 +49,7 @@ namespace VoteWeb.Areas.Admin.Controllers
                 var rootFile = ".\\wwwroot\\upload\\";
                 _JResult.Code = JResultCode.Success;
                 _JResult.Msg = "操作成功";
-                Directory.CreateDirectory(rootFile + entity.AuthorID + entity.Name);
+                Directory.CreateDirectory(rootFile + entity.AuthorID);
             }
             return Json(_JResult);
         }

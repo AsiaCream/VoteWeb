@@ -94,7 +94,7 @@ namespace VoteWeb.Models
                     };
                     DB.Authors.Add(author);
                     DB.SaveChanges();
-                    var authorFile=author.AuthorID.ToString()+author.Name;
+                    var authorFile=author.AuthorID;
                     if(!Directory.Exists(rootFile+"\\"+authorFile)){
                         Directory.CreateDirectory(rootFile+"\\"+authorFile);
                     }

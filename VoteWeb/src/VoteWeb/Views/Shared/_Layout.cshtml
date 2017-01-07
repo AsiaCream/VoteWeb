@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="/styles/Simplex.css" />
     <link rel="shortcut icon" href="/img/favicon.ico" />
     @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+    <style>
+        a:hover{
+            text-decoration: none;
+        }
+        a:focus{
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <!--navs tart-->
@@ -26,19 +34,18 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">别墅 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">商品房</a></li>
-                    <li><a href="#">公寓</a></li>
+                    <li class="active"><a href="#">摄影 <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">素描</a></li>
+                    <li><a href="#">水彩</a></li>
                     <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">已售出 <span class="caret"></span></a>
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">全部分类 <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">三期</a></li>
-                        <li><a href="#">二期</a></li>
-                        <li><a href="#">一期</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">五期</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">六期</a></li>
+                        @{
+                            for(int i=1;i<=20;i++)
+                            {
+                                <li><a href="#">第 @i 期</a></li>
+                            }
+                        }
                     </ul>
                     </li>
                 </ul>
@@ -63,13 +70,8 @@
             <div class="container">
                 <p class="text-right text-muted">@DateTime.Now.Year &copy; 版权所有.</p>
             </div>
-        </footer>
-
-    <environment names="Development">
-        <script src="/scripts/jquery.min.js"></script>
-        <script src="/scripts/bootstrap.min.js"></script>
-    </environment>
-
-    @RenderSection("scripts", required: false)
+    </footer>
 </body>
 </html>
+<script src="/scripts/jquery.min.js"></script>
+<script src="/scripts/bootstrap.min.js"></script>

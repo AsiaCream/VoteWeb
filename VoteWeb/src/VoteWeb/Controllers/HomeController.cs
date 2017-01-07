@@ -23,10 +23,16 @@ namespace VoteWeb.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            var list = DB.Pictrues.Where(x => x.IsDelete == 0 && x.IsDisplay == 1)
+            HomeIndexViewModel _viewmodel=new HomeIndexViewModel();
+            _viewmodel.Pictrues=DB.Pictrues.Where(x => x.IsDelete == 0 && x.IsDisplay == 1)
                 .OrderBy(x => x.CreateTime)
                 .ToList();
-            return View(list);
+            _viewmodel.Top10Pictrues=DB.Pictrues.Where(x=>x.IsDelete==0&&x.IsDisplay==1)
+            .OrderByDescending(x=>x.Votes)
+            .OrderByDescending(x=>x.CreateTime)
+            .Take(10)
+            .ToList();
+            return View(_viewmodel);
         }
         
         public IActionResult About()
