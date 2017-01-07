@@ -24,10 +24,10 @@ namespace VoteWeb.Controllers
         public IActionResult Index()
         {
             HomeIndexViewModel _viewmodel=new HomeIndexViewModel();
-            _viewmodel.Pictrues=DB.Pictrues.Where(x => x.IsDelete == 0 && x.IsDisplay == 1)
+            _viewmodel.Pictures=DB.Pictures.Where(x => x.IsDelete == 0 && x.IsDisplay == 1)
                 .OrderBy(x => x.CreateTime)
                 .ToList();
-            _viewmodel.Top10Pictrues=DB.Pictrues.Where(x=>x.IsDelete==0&&x.IsDisplay==1)
+            _viewmodel.Top10Pictures=DB.Pictures.Where(x=>x.IsDelete==0&&x.IsDisplay==1)
             .OrderByDescending(x=>x.Votes)
             .OrderByDescending(x=>x.CreateTime)
             .Take(10)

@@ -32,9 +32,9 @@
                     <td>@item.EndTime</td>
                     <td>@item.UserID</td>
                     <td>
-                        <a asp-action="Update" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-warning">编辑</a>|
-                        <a asp-action="Detail" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-success">详情</a>|
-                        <a asp-action="Detail" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-primary">查看</a>|
+                        <a asp-action="Update" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-success">编辑</a>|
+                        <a asp-action="Detail" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-primary">详情</a>|
+                        <a asp-action="Detail" asp-controller="Category" asp-route-CategoryID="@item.CategoryID" class="btn btn-warning">查看</a>|
                         <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
                     </td>
                 </tr>

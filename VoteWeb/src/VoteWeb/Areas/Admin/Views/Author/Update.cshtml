@@ -1,35 +1,36 @@
+@model Author
 @{
-    ViewBag.Title = "新增作者";
+    ViewBag.Title = "修改作者";
     ViewBag.FirstTab = "作者管理";
     ViewBag.SecondTab = "作者列表";
-    ViewBag.ThirdTab = "新增作者";
+    ViewBag.ThirdTab = "修改作者";
     Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 <div class="container-fluid">
-    <form asp-action="Add" asp-controller="Author" method="POST" role="form">
+    <form asp-action="Update" asp-controller="Author" method="POST" role="form">
         <fieldset>
             <legend></legend>
             <div class="form-group">
                 <label for="" class="col-md-2 control-label">姓名</label>
+                <input type="hidden" class="form-control" name="AuthorID" value="@Model.AuthorID" />
                 <div class="col-md=10">
-                    <input type="text" class="form-control" name="Name" />
+                    <input type="text" class="form-control" name="Name" value="@Model.Name" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-md-2 control-label">邮箱</label>
                 <div class="col-md=10">
-                    <input type="text" class="form-control" name="Email" />
+                    <input type="text" class="form-control" name="Email" value="@Model.Email" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="" class="col-md-2 control-label">简介</label>
                 <div class="col-md=10">
-                    <textarea class="form-control" rows="4" name="Introduction"></textarea>
+                    <textarea class="form-control" rows="4" name="Introduction">@Model.Introduction</textarea>
                     <span class="help-block">请填写作者的个人简介(200字以内)</span>
                 </div>
             </div>
             <div class="form-group">
-                <!--<label for="" class="col-md-2 control-label"></label>-->
                 <div class="col-md-6">
                     <a asp-action="List" asp-controller="Author" class="form-control btn btn-danger">取消</a>
                 </div>

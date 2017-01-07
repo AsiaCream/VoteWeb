@@ -11,11 +11,11 @@ namespace VoteWeb.ViewModels
         /// <summary>
         /// 最新的前20张
         /// </summary>
-        public List<Pictrue> Pictrues{get;set;}
+        public List<Picture> Pictures{get;set;}
 
         /// <summary>
         /// 投票总排行前10的作品
         /// </summary>
-        public List<Pictrue> Top10Pictrues{get;set;}
+        public List<Picture> Top10Pictures{get;set;}
     }
 }

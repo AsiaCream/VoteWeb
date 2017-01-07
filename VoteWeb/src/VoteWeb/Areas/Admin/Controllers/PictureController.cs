@@ -12,11 +12,11 @@ using System.IO;
 
 namespace VoteWeb.Areas.Admin.Controllers
 {
-    public class PictrueController : Controller
+    public class PictureController : Controller
     {
         private IHostingEnvironment Env;
         private VoteWebDBContext DB;
-        public PictrueController(IHostingEnvironment _env,VoteWebDBContext _db)
+        public PictureController(IHostingEnvironment _env,VoteWebDBContext _db)
         {
             Env = _env;
             DB = _db;
@@ -26,7 +26,7 @@ namespace VoteWeb.Areas.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         //[HttpPost]
-        //public IActionResult Add(Pictrue entity,IList<IFormFile> files)
+        //public IActionResult Add(Picture entity,IList<IFormFile> files)
         //{
         //    #region 添加参数
         //    entity.CreateTime = DateTime.Now;
@@ -55,7 +55,7 @@ namespace VoteWeb.Areas.Admin.Controllers
         //}
         [Area("Admin")]
         [HttpPost]
-        public IActionResult Add(Pictrue entity,IFormFile file)
+        public IActionResult Add(Picture entity,IFormFile file)
         {
             #region 添加参数
             entity.CreateTime = DateTime.Now;
@@ -71,21 +71,24 @@ namespace VoteWeb.Areas.Admin.Controllers
             using (var stream = new FileStream(Path.Combine(Env.WebRootPath+authorFile, fileName), FileMode.CreateNew))
             {
                 file.CopyTo(stream);
-                entity.PictrueURL = fileName;
+                entity.PictureURL = fileName;
             }
-            DB.Pictrues.Add(entity);
+            DB.Pictures.Add(entity);
             ReturnResult(DB.SaveChanges());
             return Json(_JResult);
         }
 
         [Area("Admin")]
-        [HttpPost]
+        [HttpGet]
         public IActionResult GetListByAuthorID(long AuthorID)
         {
-            var list=DB.Pictrues.Where(x=>x.AuthorID==AuthorID&&x.IsDelete==0)
+            var list=DB.Pictures.Where(x=>x.AuthorID==AuthorID)
+            .OrderByDescending(x=>x.Votes)
             .OrderByDescending(x=>x.CreateTime)
+            .ThenByDescending(x=>x.IsDisplay)
+            .ThenBy(x=>x.IsDelete)
             .ToList();
-            return View(list);
+            return View("/Areas/Admin/Views/Picture/List.cshtml",list);
         }
 
         private JResult ReturnResult(int result)

@@ -10,7 +10,7 @@
                 <ul class="list-group">
                     @{
                         var i=1;
-                        foreach(Pictrue item in Model.Top10Pictrues)
+                        foreach(Picture item in Model.Top10Pictures)
                         {
                             
                             <li class="list-group-item">
@@ -25,12 +25,12 @@
             <!--rank end-->
             <!--content start-->
             <div class="col-md-10">
-                @foreach (Pictrue item in Model.Pictrues)
+                @foreach (Picture item in Model.Pictures)
                 {
                     <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3" style="margin: 0">
                         <div class="thumbnail">
                             <a href="javascript:;">
-                                <img src="/upload/@(item.AuthorID)/@(item.PictrueURL)" alt="图片加载中" class="img-rounded" style="width: 180px;height: 230px;" />
+                                <img src="/upload/@(item.AuthorID)/@(item.PictureURL)" alt="图片加载中" class="img-rounded" style="width: 180px;height: 230px;" />
                             </a>
                         </div>
                         <div class="caption">

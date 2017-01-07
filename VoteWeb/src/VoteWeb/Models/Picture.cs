@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace VoteWeb.Models
 {
-    public class Pictrue
+    public class Picture
     {
         /// <summary>
         /// 作者ID
         /// </summary>
-        public long PictrueID { get; set; }
+        public long PictureID { get; set; }
         /// <summary>
         /// 作品名称
         /// </summary>
@@ -19,7 +19,7 @@ namespace VoteWeb.Models
         /// <summary>
         /// 作品地址
         /// </summary>
-        public string PictrueURL { get; set; }
+        public string PictureURL { get; set; }
         /// <summary>
         /// 作者ID
         /// </summary>

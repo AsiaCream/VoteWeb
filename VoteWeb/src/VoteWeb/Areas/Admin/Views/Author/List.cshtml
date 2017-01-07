@@ -30,10 +30,9 @@
                     <td>@item.Introduction</td>
                     <td>0</td>
                     <td>
-                        <a asp-action="Update" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-default">编辑</a>|
-                        <a asp-action="Detail" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-success">详情</a>|
+                        <a asp-action="Update" asp-controller="Author" asp-route-AuthorID="@item.AuthorID" class="btn btn-success">编辑</a>|
                         <a href="javascript:;" onclick="appendInfo(@item.AuthorID,'@item.Name')" class="btn btn-primary" data-toggle="modal" data-target="#addPhotoModal">添加作品</a>|
-                        <a asp-action="GetListByAuthorID" asp-controller="Pictrue" asp-route-AuthorID="@item.AuthorID" class="btn btn-warning">作品列表</a>|
+                        <a asp-action="GetListByAuthorID" asp-controller="Picture" asp-route-AuthorID="@item.AuthorID" class="btn btn-warning">作品列表</a>|
                         <a href="javascript:$('#form_Delete').submit();" class="btn btn-danger">删除</a>
                     </td>
                 </tr>
@@ -56,7 +55,7 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-                <form id="form_AddPictrue" asp-action="Add" asp-controller="Pictrue" method="post" enctype="multipart/form-data">
+                <form id="form_AddPictrue" asp-action="Add" asp-controller="Picture" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label class="control-label" for="txt_Author">作者</label>
                         <input class="form-control" id="txt_Author" type="text" />
@@ -89,7 +88,7 @@
                 </form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">取消
+				<button type="button" class="btn btn-danger" data-dismiss="modal">取消
 				</button>
 				<button type="button" class="btn btn-primary" id="btn_Submit">
 					确定添加

@@ -90,6 +90,45 @@ namespace VoteWeb.Areas.Admin.Controllers
         #endregion
 
         #region Update
+        /// <summary>
+        /// 根据AuthorID查找作者信息
+        /// </summary>
+        /// <param name="AuthorID"></param>
+        /// <returns></returns>
+        [Area("Admin")]
+        [HttpGet]
+        public IActionResult Update(long AuthorID)
+        {
+            var entity=DB.Authors.SingleOrDefault(x=>x.AuthorID==AuthorID);
+            return View(entity);
+        }
+
+        /// <summary>
+        /// 执行更新方法
+        /// </summary>
+        /// <param name="entity">修改目标</param>
+        /// <param name="AuthorID">修改目标ID</param>
+        /// <returns></returns>
+        [Area("Admin")]
+        [HttpPost]
+        public IActionResult Update(Author newentity,long AuthorID)
+        {
+            JResult _JResult=new JResult();
+            _JResult.Code=JResultCode.Warning;
+            _JResult.Msg="没有找到请求的选项";
+            var entity=DB.Authors.SingleOrDefault(x=>x.AuthorID==AuthorID);
+            if(entity!=null){
+                #region 修改参数
+                entity.Name=newentity.Name;
+                entity.Email=newentity.Email;
+                entity.Introduction=newentity.Introduction;
+                entity.IsDelete=newentity.IsDelete;
+                #endregion
+                ReturnResult(DB.SaveChanges());
+            }
+            return Json(_JResult);
+        }
+
 
         #endregion
 
