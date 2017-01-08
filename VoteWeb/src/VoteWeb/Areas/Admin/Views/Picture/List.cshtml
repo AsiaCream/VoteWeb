@@ -61,14 +61,29 @@
                     <td>
                         <a asp-action="Update" asp-controller="Picture" asp-route-PictureID="@item.PictureID" class="btn btn-success btn-sm">编辑</a>|
                         <a asp-action="Detail" asp-controller="Picture" asp-route-PictureID="@item.PictureID" class="btn btn-primary btn-sm">查看详情</a>|
-                        <a href="javascript:;" class="btn btn-danger btn-sm">删除</a>
+                        <a href="javascript:Delete(@item.PictureID,@item.AuthorID);" class="btn btn-danger btn-sm">删除</a>
                     </td>
                 </tr>
-                <form id="form_Delete" asp-action="DeleteByPictureID" asp-controller="Picture" method="POST">
-                    <input type="hidden" name="PictureID" id="txt_PictureID" />
-                    <input type="hidden" name="AuthorID" id="txt_AuthorID" />
-                </form>
             }
         </tbody>
     </table>
 </div>
+<script type="text/javascript">
+    function Delete(PictureID, AuthorID) {
+        var entity={
+            PictureID:PictureID,
+            AuthorID:AuthorID
+        };
+        $.post("/Admin/Picture/Delete", entity, function (data) {
+            switch (data.JResultCode) {
+                case 0:
+                    alert("Failure");
+                    break;
+                case 1:
+                    alert("OK");
+                    break;
+            }
+        });
+
+    }
+</script>

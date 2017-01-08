@@ -105,7 +105,7 @@ namespace VoteWeb.Areas.Admin.Controllers
                 var rootPath = ".\\wwwroot\\upload\\";
                 //删除文件
                 //Directory.Delete(rootPath + author.ToString() + author.Name, true);
-                string filePath = rootPath + author.AuthorID + author.Name + "\\" + entity.PictureURL;
+                string filePath = rootPath + author.AuthorID + "\\" + entity.PictureURL;
                 FileInfo fileInfo = new FileInfo(filePath);
                 fileInfo.Delete();
                 DB.Pictures.Remove(entity);
