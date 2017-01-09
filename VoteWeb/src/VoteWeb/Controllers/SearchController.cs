@@ -4,24 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VoteWeb.Models;
-using VoteWeb.ViewModels.Admin;
+using VoteWeb.ViewModels;
 
-namespace VoteWeb.Areas.Admin.Controllers
+namespace VoteWeb.Controllers
 {
     public class SearchController : Controller
     {
+        #region 构造函数
         private VoteWebDBContext DB;
         public SearchController(VoteWebDBContext _db)
         {
             DB = _db;
-        }
-        /// <summary>
-        /// 搜索列表
-        /// </summary>
-        /// <param name="keyword"></param>
-        /// <returns></returns>
-        [Area("Admin")]
-        [HttpGet]
+        } 
+        #endregion
+        // GET: /<controller>/
         public IActionResult List(string keyword)
         {
             SearchListViewModel _viewmodel = new SearchListViewModel();

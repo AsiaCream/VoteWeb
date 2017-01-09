@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using VoteWeb.Models;
 
-namespace VoteWeb.ViewModels.Admin
+namespace VoteWeb.ViewModels
 {
     /// <summary>
-    /// 后台搜索
+    /// 前台搜索
     /// </summary>
     public class SearchListViewModel
     {

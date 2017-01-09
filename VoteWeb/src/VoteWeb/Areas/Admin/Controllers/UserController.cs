@@ -6,26 +6,42 @@ using Microsoft.AspNetCore.Mvc;
 using VoteWeb.Models;
 using VoteWeb.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace VoteWeb.Areas.Admin.Controllers
 {
     public class UserController : Controller
     {
+        #region 构造函数
         private VoteWebDBContext DB;
         private UserManager<User> UserManager;
-        public UserController(VoteWebDBContext _db, UserManager<User> _userManager)
+        private SignInManager<User> SignInManager;
+        public UserController(VoteWebDBContext _db, UserManager<User> _userManager, SignInManager<User> _signInManager)
         {
             DB = _db;
             UserManager = _userManager;
+            SignInManager = _signInManager;
         }
+        #endregion
+
+        #region Add
         /// <summary>
-        /// 创建用户
+        /// 渲染添加用户视图
+        /// </summary>
+        /// <returns></returns>
+        [Area("Admin")]
+        [HttpGet]
+        public IActionResult Add() => View();
+        /// <summary>
+        /// 执行创建用户方法
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <param name="usertype"></param>
         /// <returns></returns>
-        public IActionResult Add(string username,string password,int usertype)
+        [Area("Admin")]
+        [HttpPost]
+        public IActionResult Add(string username, string password, int usertype)
         {
             JResult _JResult = new JResult();
             User user = new User
@@ -38,19 +54,31 @@ namespace VoteWeb.Areas.Admin.Controllers
             _JResult.Code = JResultCode.Success;
             _JResult.Msg = "操作成功";
             return Json(_JResult);
-        }
+        } 
+        #endregion
 
+        #region Update
         /// <summary>
         /// 修改密码
         /// </summary>
         /// <param name="password"></param>
         /// <param name="newpwd"></param>
         /// <returns></returns>
-        public IActionResult ModifyPassWord(string password,string newpwd)
+        [Area("Admin")]
+        [HttpPost]
+        public async Task<IActionResult> ModifyPassWord(string password, string newpwd)
         {
             JResult _JResult = new JResult();
-            return Json(_JResult);
-        }
+            User CurrentUser = await GetCurrentUserAsync();
+            var result = await UserManager.ChangePasswordAsync(CurrentUser, password, newpwd);
+            if (result.Succeeded)
+            {
+                await SignInManager.SignOutAsync();
+                return RedirectToAction("Login", "Account");
+            }
+            return View();
+        } 
+        #endregion
 
         /// <summary>
         /// 添加用户角色
