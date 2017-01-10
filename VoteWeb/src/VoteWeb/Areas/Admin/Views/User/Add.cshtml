@@ -1,0 +1,44 @@
+﻿@{
+    ViewBag.Title = "新增管理员";
+    ViewBag.FirstTab = "系统管理";
+    ViewBag.SecondTab = "新增管理员";
+    Layout = "/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+    <form asp-action="Add" asp-controller="User" method="POST" role="form">
+        <fieldset>
+            <legend></legend>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">用户名</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" name="UserName" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">密码</label>
+                <div class="col-md=10">
+                    <input type="text" class="form-control" name="PassWord" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-md-2 control-label">用户身份</label>
+                <div class="col-md=10">
+                    <select name="usertype" class="form-control" id="select_user_list">
+                        <option>超级管理员</option>
+                        <option>管理员</option>
+                        <option>普通用户</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <!--<label for="" class="col-md-2 control-label"></label>-->
+                <div class="col-md-6">
+                    <a asp-action="List" asp-controller="User" class="form-control btn btn-danger btn-sm">取消</a>
+                </div>
+                <div class="col-md-6">
+                    <input type="submit" class="form-control btn btn-success btn-sm" value="添加" />
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
