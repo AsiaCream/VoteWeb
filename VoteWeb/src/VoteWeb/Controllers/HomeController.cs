@@ -34,6 +34,16 @@ namespace VoteWeb.Controllers
             .ToList();
             return View(_viewmodel);
         }
+
+        /// <summary>
+        /// 图片详情页面
+        /// </summary>
+        /// <param name="PictrueID"></param>
+        /// <returns></returns>
+        public IActionResult Detail(int PictrueID)
+        {
+            return View(DB.Pictures.SingleOrDefault(x=>x.PictureID==PictrueID));
+        }
         
         public IActionResult About()
         {
