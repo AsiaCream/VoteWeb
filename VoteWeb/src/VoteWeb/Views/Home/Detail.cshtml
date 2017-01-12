@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "详情页面";
+}
+@model HomeDetailViewModel
+<div class="container-fluid">
+    <div class="col-md-9">
+        <div class="thumbnail">
+            <a asp-action="Detail" asp-controller="Home" asp-route-PictureID="@Model.picture.PictureID">
+                <img src="/upload/@(Model.picture.AuthorID)/@(Model.picture.PictureURL)" alt="图片加载中" class="img-rounded" style="width: 800px;height: 600px;" />
+            </a>
+        </div>
+        <div class="caption">
+            <a href="javascript:;" class="text-center">
+                <p>@Model.picture.Title</p>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <h4><icon class="icon-flag">最新作品</h4>
+        <ul class="list-group">
+            @foreach (Picture item in Model.NewPictures)
+            {
+                <li class="list-group-item"><a asp-action="Detail" asp-controller="Home" asp-route-PictureID="@item.PictureID">@item.Title</a></li>
+            }
+        </ul>
+        <h4><icon class="icon-flag">同类作品</h4>
+        <ul class="list-group">
+            @foreach (Picture item in Model.SimilarPictures)
+            {
+                <li class="list-group-item"><a asp-action="Detail" asp-controller="Home" asp-route-PictureID="@item.PictureID">@item.Title</a></li>
+            }
+        </ul>
+    </div>
+</div>

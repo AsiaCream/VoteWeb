@@ -8,15 +8,12 @@ using VoteWeb.ViewModels;
 
 namespace VoteWeb.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        #region 构造函数
-        private VoteWebDBContext DB;
-        public HomeController(VoteWebDBContext _db)
+        public HomeController(VoteWebDBContext _db) : base(_db)
         {
-            DB = _db;
-        } 
-        #endregion
+        }
+
         /// <summary>
         /// 前台展示最新的分页数据
         /// </summary>
@@ -38,11 +35,23 @@ namespace VoteWeb.Controllers
         /// <summary>
         /// 图片详情页面
         /// </summary>
-        /// <param name="PictrueID"></param>
+        /// <param name="PictureID"></param>
         /// <returns></returns>
-        public IActionResult Detail(int PictrueID)
+        public IActionResult Detail(int PictureID)
         {
-            return View(DB.Pictures.SingleOrDefault(x=>x.PictureID==PictrueID));
+            HomeDetailViewModel _viewmodel = new HomeDetailViewModel();
+            Picture entity = DB.Pictures
+                .SingleOrDefault(x => x.PictureID == PictureID);
+            _viewmodel.picture = entity;
+            _viewmodel.NewPictures = DB.Pictures
+                .Where(x => x.IsDisplay == 1 && x.IsDelete == 0)
+                .OrderByDescending(x => x.CreateTime)
+                .ToList();
+            _viewmodel.SimilarPictures = DB.Pictures
+                .Where(x => x.IsDisplay == 1 && x.IsDelete == 0 && x.CategoryID == entity.CategoryID)
+                .OrderByDescending(x => x.CreateTime)
+                .ToList();
+            return View(_viewmodel);
         }
         
         public IActionResult About()
@@ -55,6 +64,11 @@ namespace VoteWeb.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
+
+            return View();
+        }
+        public IActionResult Save()
+        {
 
             return View();
         }

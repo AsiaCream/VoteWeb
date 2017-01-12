@@ -19,6 +19,6 @@ namespace VoteWeb.ViewModels
         /// <summary>
         /// 相似作品
         /// </summary>
-        public List<Picture> CommonPictures { get; set; }
+        public List<Picture> SimilarPictures { get; set; }
     }
 }
