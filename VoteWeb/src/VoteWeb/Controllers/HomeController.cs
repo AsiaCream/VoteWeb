@@ -32,6 +32,21 @@ namespace VoteWeb.Controllers
             return View(_viewmodel);
         }
 
+        public IActionResult List(long CategoryID)
+        {
+            HomeListViewModel _viewmodel = new HomeListViewModel();
+            _viewmodel.Pictures = DB.Pictures.Where(x => x.CategoryID == CategoryID && x.IsDelete == 0 && x.IsDisplay == 1)
+                .OrderByDescending(x => x.CreateTime)
+                .ToList();
+            _viewmodel.Top10Pictures = DB.Pictures.Where(x => x.CategoryID == CategoryID && x.IsDelete == 0 && x.IsDisplay == 1)
+                .OrderByDescending(x => x.Votes)
+                .ThenByDescending(x => x.CreateTime)
+                .ToList();
+            _viewmodel.RandomPictures= DB.Pictures.Where(x => x.CategoryID == CategoryID && x.IsDelete == 0 && x.IsDisplay == 1)
+                .ToList();
+            return View(_viewmodel);
+        }
+
         /// <summary>
         /// 图片详情页面
         /// </summary>
